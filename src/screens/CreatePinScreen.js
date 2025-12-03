@@ -8,7 +8,7 @@ export default function CreatePinScreen({ navigation }) {
 
   const handleSubmit = () => {
     if (pin.length !== 4) return;
-    navigation.navigate("Dashboard"); // after creating PIN
+    navigation.replace("MainTabs");
   };
 
   return (

@@ -22,21 +22,6 @@ export default function UserProfileScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-        {/* ---------- WAVE HEADER ---------- */}
-        <View style={styles.waveContainer}>
-          <Svg height="100%" width="100%" viewBox="0 0 1440 320">
-            <Path
-              fill={colors.primary}
-              d="M0,32L60,69.3C120,107,240,181,360,224C480,267,600,277,720,250.7C840,224,960,160,1080,112C1200,64,1320,32,1380,16L1440,0V0H0Z"
-            />
-            <Path
-              fill={colors.primary}
-              fillOpacity="0.7"
-              d="M0,224L80,224C160,224,320,224,480,202.7C640,181,800,139,960,144C1120,149,1280,203,1360,229.3L1440,256V0H0Z"
-            />
-          </Svg>
-        </View>
-
         {/* ---------- PROFILE HEADER ---------- */}
         <View style={styles.headerSection}>
           <TouchableOpacity
@@ -156,7 +141,10 @@ export default function UserProfileScreen({ navigation }) {
           </TouchableOpacity>
         </View>
         {/* ---------- LOGOUT ---------- */}
-        <TouchableOpacity style={styles.logoutBtn}>
+        <TouchableOpacity
+          style={styles.logoutBtn}
+          onPress={() => navigation.navigate("Login")}
+        >
           <Feather name="log-out" size={18} color="#fff" />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
@@ -199,7 +187,6 @@ const styles = StyleSheet.create({
 
   avatarContainer: {
     alignItems: "center",
-    marginTop: -40,
     marginBottom: 20,
   },
 

@@ -11,8 +11,9 @@ import {
   ScrollView,
 } from "react-native";
 import colors from "../theme/colors";
+import { Feather } from "@expo/vector-icons";
 
-export default function TransactionsScreen({ route }) {
+export default function TransactionsScreen({ route, navigation }) {
   const allTransactions = route?.params?.allTransactions || [];
 
   // ---------------- FILTER STATE ----------------
@@ -105,7 +106,17 @@ export default function TransactionsScreen({ route }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        <Text style={styles.header}>Transaction History</Text>
+        {/* HEADER ROW WITH BACK BUTTON */}
+        <View style={styles.headerRow}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Feather name="arrow-left" size={22} color={colors.text} />
+          </TouchableOpacity>
+
+          <Text style={styles.headerTitle}>Transaction History</Text>
+
+          {/* empty box to balance spacing */}
+          <View style={{ width: 22 }} />
+        </View>
 
         {/* ----------- TOTAL SUMMARY ----------- */}
         <View style={styles.summaryBox}>
@@ -204,6 +215,21 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     marginBottom: 10,
+    color: colors.text,
+  },
+
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    marginBottom: 10,
+  },
+
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "700",
     color: colors.text,
   },
 

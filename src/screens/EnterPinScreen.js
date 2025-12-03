@@ -13,7 +13,10 @@ export default function EnterPinScreen({ navigation }) {
 
   const handleCheckPin = () => {
     if (pin.length === 4) {
-      navigation.navigate("Dashboard");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "MainTabs" }],
+      });
     }
   };
 

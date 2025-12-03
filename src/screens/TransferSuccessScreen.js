@@ -64,7 +64,7 @@ export default function TransferSuccessScreen({ route, navigation }) {
         <View style={styles.btnRow}>
           <TouchableOpacity
             style={styles.homeBtn}
-            onPress={() => navigation.navigate("Dashboard")}
+            onPress={() => navigation.navigate("MainTabs", { screen: "Home" })}
           >
             <Text style={styles.homeBtnText}>Done</Text>
           </TouchableOpacity>

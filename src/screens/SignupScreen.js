@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -9,10 +9,13 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Animated,
 } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import Svg, { Path, Defs, LinearGradient, Stop } from "react-native-svg";
 import { Feather } from "@expo/vector-icons";
 import colors from "../theme/colors";
+
+const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 export default function SignupScreen({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -21,10 +24,136 @@ export default function SignupScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  // Animation refs
+  const wave1 = useRef(new Animated.Value(0)).current;
+  const wave2 = useRef(new Animated.Value(0)).current;
+  const wave3 = useRef(new Animated.Value(0)).current;
+  const wave4 = useRef(new Animated.Value(0)).current;
+  const cardSlide = useRef(new Animated.Value(50)).current;
+  const cardFade = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    // Wave animations with different speeds and directions
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(wave1, {
+          toValue: 1,
+          duration: 7000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(wave1, {
+          toValue: 0,
+          duration: 7000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(wave2, {
+          toValue: 1,
+          duration: 5000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(wave2, {
+          toValue: 0,
+          duration: 5000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(wave3, {
+          toValue: 1,
+          duration: 9000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(wave3, {
+          toValue: 0,
+          duration: 9000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(wave4, {
+          toValue: 1,
+          duration: 6000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(wave4, {
+          toValue: 0,
+          duration: 6000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    // Card entrance animation
+    Animated.parallel([
+      Animated.timing(cardFade, {
+        toValue: 1,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+      Animated.spring(cardSlide, {
+        toValue: 0,
+        tension: 40,
+        friction: 8,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
   // Validation rules
   const hasLength = password.length >= 6;
   const hasUpper = /[A-Z]/.test(password);
   const hasNumber = /[0-9]/.test(password);
+
+  const wave1TranslateX = wave1.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -60],
+  });
+
+  const wave1TranslateY = wave1.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 8],
+  });
+
+  const wave2TranslateX = wave2.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 70],
+  });
+
+  const wave2TranslateY = wave2.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -10],
+  });
+
+  const wave3TranslateX = wave3.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -40],
+  });
+
+  const wave3TranslateY = wave3.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 6],
+  });
+
+  const wave4TranslateX = wave4.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 50],
+  });
+
+  const wave4TranslateY = wave4.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -12],
+  });
 
   const handleSignup = () => {
     if (!fullName || !email || !phone || !password || !confirmPassword) {
@@ -42,28 +171,122 @@ export default function SignupScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 310 }}>
-        {/* ---------- TOP WAVE BACKGROUND ---------- */}
-        <View style={styles.waveContainer}>
-          <Svg height="100%" width="100%" viewBox="0 0 1440 320">
-            <Path
-              fill={colors.primary}
-              d="M0,64L60,85.3C120,107,240,149,360,176C480,203,600,213,720,208C840,203,960,181,1080,149.3C1200,117,1320,75,1380,53.3L1440,32V0H0Z"
-            />
-            <Path
-              fill={colors.primary}
-              fillOpacity="0.7"
-              d="M0,192L80,176C160,160,320,128,480,117C640,107,800,117,960,149C1120,181,1280,235,1360,256L1440,277V0H0Z"
-            />
-          </Svg>
-        </View>
+      {/* ---------- ANIMATED WAVE BACKGROUND ---------- */}
+      <View style={styles.waveContainer}>
+        <Svg
+          height="100%"
+          width="100%"
+          viewBox="0 0 1440 320"
+          preserveAspectRatio="none"
+        >
+          <Defs>
+            <LinearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <Stop offset="0%" stopColor={colors.primary} stopOpacity="0.2" />
+              <Stop offset="50%" stopColor={colors.primary} stopOpacity="0.3" />
+              <Stop
+                offset="100%"
+                stopColor={colors.primary}
+                stopOpacity="0.2"
+              />
+            </LinearGradient>
+            <LinearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <Stop offset="0%" stopColor={colors.primary} stopOpacity="0.35" />
+              <Stop offset="50%" stopColor={colors.primary} stopOpacity="0.5" />
+              <Stop
+                offset="100%"
+                stopColor={colors.primary}
+                stopOpacity="0.35"
+              />
+            </LinearGradient>
+            <LinearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
+              <Stop offset="0%" stopColor={colors.primary} stopOpacity="0.6" />
+              <Stop
+                offset="50%"
+                stopColor={colors.primary}
+                stopOpacity="0.75"
+              />
+              <Stop
+                offset="100%"
+                stopColor={colors.primary}
+                stopOpacity="0.6"
+              />
+            </LinearGradient>
+            <LinearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+              <Stop offset="0%" stopColor={colors.primary} stopOpacity="0.85" />
+              <Stop offset="50%" stopColor={colors.primary} stopOpacity="1" />
+              <Stop
+                offset="100%"
+                stopColor={colors.primary}
+                stopOpacity="0.85"
+              />
+            </LinearGradient>
+          </Defs>
 
+          {/* Back wave 1 - slowest, most transparent */}
+          <AnimatedPath
+            fill="url(#grad1)"
+            d="M0,128L48,138.7C96,149,192,171,288,165.3C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            style={{
+              transform: [
+                { translateX: wave1TranslateX },
+                { translateY: wave1TranslateY },
+              ],
+            }}
+          />
+
+          {/* Back wave 2 */}
+          <AnimatedPath
+            fill="url(#grad2)"
+            d="M0,96L48,106.7C96,117,192,139,288,144C384,149,480,139,576,128C672,117,768,107,864,112C960,117,1056,139,1152,144C1248,149,1344,139,1392,133.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            style={{
+              transform: [
+                { translateX: wave2TranslateX },
+                { translateY: wave2TranslateY },
+              ],
+            }}
+          />
+
+          {/* Front wave 1 */}
+          <AnimatedPath
+            fill="url(#grad3)"
+            d="M0,64L48,80C96,96,192,128,288,133.3C384,139,480,117,576,106.7C672,96,768,96,864,106.7C960,117,1056,139,1152,138.7C1248,139,1344,117,1392,106.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            style={{
+              transform: [
+                { translateX: wave3TranslateX },
+                { translateY: wave3TranslateY },
+              ],
+            }}
+          />
+
+          {/* Front wave 2 - most prominent */}
+          <AnimatedPath
+            fill="url(#grad4)"
+            d="M0,32L48,42.7C96,53,192,75,288,85.3C384,96,480,96,576,90.7C672,85,768,75,864,80C960,85,1056,107,1152,112C1248,117,1344,107,1392,101.3L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            style={{
+              transform: [
+                { translateX: wave4TranslateX },
+                { translateY: wave4TranslateY },
+              ],
+            }}
+          />
+        </Svg>
+      </View>
+
+      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 310 }}>
         {/* ---------- SIGNUP CARD ---------- */}
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           style={styles.cardWrapper}
         >
-          <View style={styles.card}>
+          <Animated.View
+            style={[
+              styles.card,
+              {
+                opacity: cardFade,
+                transform: [{ translateY: cardSlide }],
+              },
+            ]}
+          >
             <Text style={styles.title}>Create Account</Text>
 
             {/* FULL NAME */}
@@ -139,7 +362,7 @@ export default function SignupScreen({ navigation }) {
                 Login
               </Text>
             </Text>
-          </View>
+          </Animated.View>
         </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
@@ -188,9 +411,9 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: "100%",
-    height: 260,
-    pointerEvents: "none", // <–– this is the FIX
-    zIndex: -1, // <–– ensures it stays behind
+    height: 350,
+    pointerEvents: "none",
+    zIndex: 0,
   },
 
   cardWrapper: {

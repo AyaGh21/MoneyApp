@@ -20,21 +20,6 @@ export default function SupportScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-        {/* ---------- WAVY HEADER ---------- */}
-        <View style={styles.waveContainer}>
-          <Svg height="100%" width="100%" viewBox="0 0 1440 320">
-            <Path
-              fill={colors.primary}
-              d="M0,64L60,85.3C120,107,240,149,360,176C480,203,600,213,720,208C840,203,960,181,1080,149.3C1200,117,1320,75,1380,53.3L1440,32V0H0Z"
-            />
-            <Path
-              fill={colors.primary}
-              fillOpacity="0.7"
-              d="M0,192L80,176C160,160,320,128,480,117C640,107,800,117,960,149C1120,181,1280,235,1360,256L1440,277V0H0Z"
-            />
-          </Svg>
-        </View>
-
         {/* ---------- HEADER ---------- */}
         <View style={styles.headerSection}>
           <TouchableOpacity
@@ -190,6 +175,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
     marginBottom: 20,
+    marginTop: 50,
   },
 
   cardTitle: {
