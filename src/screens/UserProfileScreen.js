@@ -22,7 +22,6 @@ export default function UserProfileScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-        {/* ---------- PROFILE HEADER ---------- */}
         <View style={styles.headerSection}>
           <TouchableOpacity
             style={styles.backBtn}
@@ -32,7 +31,6 @@ export default function UserProfileScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* ---------- AVATAR ---------- */}
         <View style={styles.avatarContainer}>
           <View style={styles.avatar}>
             <Text style={styles.avatarInitial}>{name.charAt(0)}</Text>
@@ -51,11 +49,9 @@ export default function UserProfileScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* ---------- CARD (Personal Info) ---------- */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Personal Information</Text>
 
-          {/* Full Name */}
           <View style={styles.inputWrapper}>
             <Feather name="user" size={18} color="#999" style={styles.icon} />
             <TextInput
@@ -68,7 +64,6 @@ export default function UserProfileScreen({ navigation }) {
             />
           </View>
 
-          {/* Email */}
           <View style={styles.inputWrapper}>
             <Feather name="mail" size={18} color="#999" style={styles.icon} />
             <TextInput
@@ -81,7 +76,6 @@ export default function UserProfileScreen({ navigation }) {
             />
           </View>
 
-          {/* Phone */}
           <View style={styles.inputWrapper}>
             <Feather name="phone" size={18} color="#999" style={styles.icon} />
             <TextInput
@@ -95,7 +89,6 @@ export default function UserProfileScreen({ navigation }) {
           </View>
         </View>
 
-        {/* ---------- SECURITY ---------- */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Security & Settings</Text>
 
@@ -140,7 +133,6 @@ export default function UserProfileScreen({ navigation }) {
             <Feather name="chevron-right" size={20} color="#bbb" />
           </TouchableOpacity>
         </View>
-        {/* ---------- LOGOUT ---------- */}
         <TouchableOpacity
           style={styles.logoutBtn}
           onPress={() => navigation.navigate("Login")}
@@ -152,8 +144,6 @@ export default function UserProfileScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-
-/* --------------------- STYLES --------------------- */
 
 const styles = StyleSheet.create({
   safeArea: {

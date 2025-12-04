@@ -20,7 +20,6 @@ export default function LoginScreen({ navigation }) {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
 
-  // Animation refs
   const wave1 = useRef(new Animated.Value(0)).current;
   const wave2 = useRef(new Animated.Value(0)).current;
   const wave3 = useRef(new Animated.Value(0)).current;
@@ -29,7 +28,6 @@ export default function LoginScreen({ navigation }) {
   const cardFade = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Wave animations with different speeds and directions
     Animated.loop(
       Animated.sequence([
         Animated.timing(wave1, {
@@ -90,7 +88,6 @@ export default function LoginScreen({ navigation }) {
       ])
     ).start();
 
-    // Card entrance animation
     Animated.parallel([
       Animated.timing(cardFade, {
         toValue: 1,
@@ -178,7 +175,6 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* ---------- ANIMATED WAVE BACKGROUND ---------- */}
       <View style={styles.waveContainer}>
         <Svg
           height="100%"
@@ -229,7 +225,6 @@ export default function LoginScreen({ navigation }) {
             </LinearGradient>
           </Defs>
 
-          {/* Back wave 1 - slowest, most transparent */}
           <AnimatedPath
             fill="url(#grad1)"
             d="M0,128L48,138.7C96,149,192,171,288,165.3C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
@@ -241,7 +236,6 @@ export default function LoginScreen({ navigation }) {
             }}
           />
 
-          {/* Back wave 2 */}
           <AnimatedPath
             fill="url(#grad2)"
             d="M0,96L48,106.7C96,117,192,139,288,144C384,149,480,139,576,128C672,117,768,107,864,112C960,117,1056,139,1152,144C1248,149,1344,139,1392,133.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
@@ -253,7 +247,6 @@ export default function LoginScreen({ navigation }) {
             }}
           />
 
-          {/* Front wave 1 */}
           <AnimatedPath
             fill="url(#grad3)"
             d="M0,64L48,80C96,96,192,128,288,133.3C384,139,480,117,576,106.7C672,96,768,96,864,106.7C960,117,1056,139,1152,138.7C1248,139,1344,117,1392,106.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
@@ -265,7 +258,6 @@ export default function LoginScreen({ navigation }) {
             }}
           />
 
-          {/* Front wave 2 - most prominent */}
           <AnimatedPath
             fill="url(#grad4)"
             d="M0,32L48,42.7C96,53,192,75,288,85.3C384,96,480,96,576,90.7C672,85,768,75,864,80C960,85,1056,107,1152,112C1248,117,1344,107,1392,101.3L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
@@ -295,7 +287,6 @@ export default function LoginScreen({ navigation }) {
           >
             <Text style={styles.title}>Welcome Back</Text>
 
-            {/* EMAIL / PHONE */}
             <View style={styles.inputWrapper}>
               <Feather name="mail" size={18} color="#888" style={styles.icon} />
               <TextInput
@@ -307,7 +298,6 @@ export default function LoginScreen({ navigation }) {
               />
             </View>
 
-            {/* PASSWORD */}
             <View style={styles.inputWrapper}>
               <Feather name="lock" size={18} color="#888" style={styles.icon} />
               <TextInput
@@ -320,7 +310,6 @@ export default function LoginScreen({ navigation }) {
               />
             </View>
 
-            {/* LOGIN BUTTON */}
             <TouchableOpacity
               style={styles.button}
               onPress={handleLogin}

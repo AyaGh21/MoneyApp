@@ -15,7 +15,6 @@ import colors from "../theme/colors";
 export default function ManageQuickSendScreen({ route, navigation }) {
   const { quickSend, setQuickSend } = route.params;
 
-  // LOCAL STATE COPY — THIS FIXES EVERYTHING
   const [localList, setLocalList] = useState([...quickSend]);
 
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -23,7 +22,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
   const [editName, setEditName] = useState("");
   const [editUsername, setEditUsername] = useState("");
 
-  // -------- SAVE CHANGES BACK TO DASHBOARD WHEN LEAVING --------
   useEffect(() => {
     const unsubscribe = navigation.addListener("beforeRemove", () => {
       setQuickSend(localList); // Send updated list back
@@ -32,7 +30,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
     return unsubscribe;
   }, [localList]);
 
-  // -------- OPEN EDIT MODAL --------
   const openEditModal = (user) => {
     setEditingUser(user);
     setEditName(user.name);
@@ -40,7 +37,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
     setEditModalVisible(true);
   };
 
-  // -------- SAVE EDIT --------
   const saveEdit = () => {
     if (!editName.trim() || !editUsername.trim()) {
       Alert.alert("Missing info", "Both fields are required.");
@@ -58,7 +54,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
     setEditModalVisible(false);
   };
 
-  // -------- DELETE USER --------
   const deleteUser = (user) => {
     Alert.alert("Remove Contact", `Remove ${user.name}?`, [
       { text: "Cancel", style: "cancel" },
@@ -72,7 +67,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
     ]);
   };
 
-  // -------- REORDER: MOVE UP --------
   const moveUp = (index) => {
     if (index === 0) return;
 
@@ -84,7 +78,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
     setLocalList(newList);
   };
 
-  // -------- REORDER: MOVE DOWN --------
   const moveDown = (index) => {
     if (index === localList.length - 1) return;
 
@@ -96,7 +89,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
     setLocalList(newList);
   };
 
-  // -------- RENDER ROW --------
   const renderItem = ({ item, index }) => (
     <View style={styles.row}>
       <View style={[styles.avatar, { backgroundColor: item.color }]}>
@@ -110,7 +102,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
         <Text style={styles.username}>{item.username}</Text>
       </View>
 
-      {/* REORDER BUTTONS */}
       <TouchableOpacity onPress={() => moveUp(index)}>
         <Text style={styles.reorderBtn}>↑</Text>
       </TouchableOpacity>
@@ -119,12 +110,10 @@ export default function ManageQuickSendScreen({ route, navigation }) {
         <Text style={styles.reorderBtn}>↓</Text>
       </TouchableOpacity>
 
-      {/* EDIT */}
       <TouchableOpacity onPress={() => openEditModal(item)}>
         <Text style={styles.editBtn}>Edit</Text>
       </TouchableOpacity>
 
-      {/* DELETE */}
       <TouchableOpacity onPress={() => deleteUser(item)}>
         <Text style={styles.deleteBtn}>X</Text>
       </TouchableOpacity>
@@ -181,7 +170,6 @@ export default function ManageQuickSendScreen({ route, navigation }) {
   );
 }
 
-// ---------------- STYLES ----------------
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#fff" },
 

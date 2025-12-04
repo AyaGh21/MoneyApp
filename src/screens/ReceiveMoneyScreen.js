@@ -16,19 +16,17 @@ import * as Clipboard from "expo-clipboard";
 export default function ReceiveMoneyScreen({ navigation }) {
   const [currency, setCurrency] = useState("USD");
 
-  // request form state
   const [requestUser, setRequestUser] = useState("");
   const [requestAmount, setRequestAmount] = useState("");
   const [requestNote, setRequestNote] = useState("");
 
-  const walletId = "PC-NG-005291";
+  const walletId = "GHAZALI-005291";
 
   const copyToClipboard = async (text) => {
     await Clipboard.setStringAsync(text);
     Alert.alert("Copied!", "Wallet info has been copied.");
   };
 
-  // Handle Request Money Action
   const handleRequest = () => {
     const amt = parseFloat(requestAmount);
 
@@ -37,7 +35,6 @@ export default function ReceiveMoneyScreen({ navigation }) {
       return;
     }
 
-    // send to Dashboard
     navigation.navigate("MainTabs", {
       screen: "Home",
       params: {
@@ -49,7 +46,6 @@ export default function ReceiveMoneyScreen({ navigation }) {
       },
     });
 
-    // reset input fields
     setRequestAmount("");
     setRequestUser("");
     setRequestNote("");
@@ -58,13 +54,11 @@ export default function ReceiveMoneyScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
-        {/* HEADER */}
         <Text style={styles.title}>Receive Money</Text>
         <Text style={styles.description}>
           Share your wallet details or request money from someone.
         </Text>
 
-        {/* WALLET ADDRESS CARD */}
         <View style={styles.card}>
           <Text style={styles.cardLabel}>Your Wallet Address</Text>
 
@@ -106,7 +100,6 @@ export default function ReceiveMoneyScreen({ navigation }) {
           </View>
         </View>
 
-        {/* QR CODE CARD */}
         <View style={styles.card}>
           <Text style={styles.cardLabel}>QR Code</Text>
 
@@ -126,7 +119,6 @@ export default function ReceiveMoneyScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* REQUEST FROM SOMEONE */}
         <View style={styles.card}>
           <Text style={styles.cardLabel}>Request Money From Someone</Text>
 
@@ -161,7 +153,6 @@ export default function ReceiveMoneyScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* CTA BUTTON */}
         <TouchableOpacity style={styles.ctaButton}>
           <Text style={styles.ctaText}>Share Wallet Info</Text>
         </TouchableOpacity>
@@ -171,8 +162,6 @@ export default function ReceiveMoneyScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-
-// ============================ STYLES ============================
 
 const styles = StyleSheet.create({
   safeArea: {

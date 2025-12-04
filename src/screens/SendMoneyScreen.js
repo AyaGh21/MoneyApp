@@ -17,7 +17,6 @@ export default function SendMoneyScreen({ navigation }) {
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
 
-  // Fake balance — real balance will be handled in DashboardScreen
   const userBalance = 4485.3;
 
   const handleSend = () => {
@@ -38,7 +37,6 @@ export default function SendMoneyScreen({ navigation }) {
       return;
     }
 
-    // Sending data back to Dashboard
     const transferId = Date.now().toString();
 
     navigation.navigate("TransferSuccess", {
@@ -48,7 +46,6 @@ export default function SendMoneyScreen({ navigation }) {
       amount: numeric,
     });
 
-    // Also send to dashboard AFTER success
     setTimeout(() => {
       navigation.navigate("MainTabs", {
         screen: "Home",
@@ -73,7 +70,6 @@ export default function SendMoneyScreen({ navigation }) {
             Enter the details below to transfer money.
           </Text>
 
-          {/* USERNAME */}
           <Text style={styles.label}>Recipient Username / Phone / ID</Text>
           <TextInput
             style={styles.input}
@@ -82,7 +78,6 @@ export default function SendMoneyScreen({ navigation }) {
             onChangeText={setUsername}
           />
 
-          {/* AMOUNT */}
           <Text style={styles.label}>Amount</Text>
           <TextInput
             style={styles.input}
@@ -92,7 +87,6 @@ export default function SendMoneyScreen({ navigation }) {
             onChangeText={setAmount}
           />
 
-          {/* NOTE */}
           <Text style={styles.label}>Note (optional)</Text>
           <TextInput
             style={[styles.input, { height: 80 }]}
@@ -102,7 +96,6 @@ export default function SendMoneyScreen({ navigation }) {
             onChangeText={setNote}
           />
 
-          {/* BUTTON */}
           <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
             <Text style={styles.sendText}>Send Money</Text>
           </TouchableOpacity>
@@ -113,8 +106,6 @@ export default function SendMoneyScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-
-// ------------------ STYLES ------------------
 
 const styles = StyleSheet.create({
   safeArea: {

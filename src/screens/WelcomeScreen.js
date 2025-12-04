@@ -66,7 +66,6 @@ export default function WelcomeScreen({ navigation }) {
       ])
     ).start();
 
-    // Content fade in and scale
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -99,7 +98,6 @@ export default function WelcomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* ---------- ANIMATED WAVE BACKGROUND ---------- */}
       <View style={styles.waveContainer}>
         <Svg
           height="300"
@@ -107,7 +105,6 @@ export default function WelcomeScreen({ navigation }) {
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
         >
-          {/* Back wave - slowest */}
           <AnimatedPath
             fill={colors.primary}
             fillOpacity="0.3"
@@ -117,7 +114,6 @@ export default function WelcomeScreen({ navigation }) {
             }}
           />
 
-          {/* Middle wave - medium speed */}
           <AnimatedPath
             fill={colors.primary}
             fillOpacity="0.5"
@@ -127,7 +123,6 @@ export default function WelcomeScreen({ navigation }) {
             }}
           />
 
-          {/* Front wave - fastest */}
           <AnimatedPath
             fill={colors.primary}
             d="M0,160L48,149.3C96,139,192,117,288,112C384,107,480,117,576,133.3C672,149,768,171,864,165.3C960,160,1056,128,1152,112C1248,96,1344,96,1392,96L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
@@ -138,7 +133,6 @@ export default function WelcomeScreen({ navigation }) {
         </Svg>
       </View>
 
-      {/* ---------- ANIMATED CONTENT ---------- */}
       <Animated.View
         style={[
           styles.content,
@@ -177,7 +171,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
 
-  /* WAVE BACKGROUND */
   waveContainer: {
     position: "absolute",
     top: 0,
@@ -187,7 +180,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 
-  /* CENTER CONTENT */
   content: {
     flex: 1,
     justifyContent: "center",

@@ -18,7 +18,6 @@ import colors from "../theme/colors";
 const visaLogo = require("../../assets/visa.png");
 const chipImage = require("../../assets/chip.png");
 
-// ----------- STATIC DATA -----------
 const UPCOMING = [
   {
     id: "1",
@@ -65,10 +64,8 @@ const INITIAL_RECENT = [
 ];
 
 export default function DashboardScreen({ route, navigation }) {
-  // -------- BALANCE --------
   const [balance, setBalance] = useState(4485.3);
 
-  // -------- QUICK SEND USERS --------
   const [quickSend, setQuickSend] = useState([
     { id: "1", name: "Ken", username: "@ken01", color: "#f97316" },
     { id: "2", name: "Ann", username: "@ann", color: "#22c55e" },
@@ -88,10 +85,8 @@ export default function DashboardScreen({ route, navigation }) {
     },
   ]);
 
-  // -------- RECENT TRANSACTIONS --------
   const [recent, setRecent] = useState(INITIAL_RECENT);
 
-  // -------- MONEY ACTION MODAL (SEND / REQUEST) --------
   const [moneyModalVisible, setMoneyModalVisible] = useState(false);
   const [moneyMode, setMoneyMode] = useState("send");
   const [moneyUsername, setMoneyUsername] = useState("");
@@ -100,7 +95,6 @@ export default function DashboardScreen({ route, navigation }) {
 
   const [showCardNumber, setShowCardNumber] = useState(false);
 
-  // Listen for new request coming from ReceiveMoneyScreen
   React.useEffect(() => {
     if (route?.params?.newRequest) {
       const r = route.params.newRequest;
@@ -112,8 +106,8 @@ export default function DashboardScreen({ route, navigation }) {
           username: r.username,
           note: r.note,
           amount: r.amount,
-          isIncoming: false, // not incoming, not sent — it's pending
-          isRequest: true, // NEW FLAG
+          isIncoming: false,
+          isRequest: true,
           date: new Date().toISOString(),
         },
         ...prev,
@@ -142,7 +136,6 @@ export default function DashboardScreen({ route, navigation }) {
     }
   }, [route?.params?.newSentTransfer]);
 
-  // ------------ ADD USER ------------
   const addUser = () => {
     if (!newName.trim() || !newUsername.trim()) {
       Alert.alert("Missing info", "Please enter both name and username.");
@@ -166,7 +159,6 @@ export default function DashboardScreen({ route, navigation }) {
     setAddUserModalVisible(false);
   };
 
-  // ------------ DELETE USER ------------
   const deleteUser = (id, name) => {
     Alert.alert("Remove Contact", `Do you want to remove ${name}?`, [
       { text: "Cancel", style: "cancel" },
@@ -180,7 +172,6 @@ export default function DashboardScreen({ route, navigation }) {
     ]);
   };
 
-  // ------------ OPEN MONEY MODAL ------------
   const openMoneyModal = (mode, username = "") => {
     setMoneyMode(mode);
     setMoneyUsername(username);
@@ -189,7 +180,6 @@ export default function DashboardScreen({ route, navigation }) {
     setMoneyModalVisible(true);
   };
 
-  // ------------ CONFIRM SEND / REQUEST ------------
   const handleConfirmMoney = () => {
     const numericAmount = parseFloat(moneyAmount.replace(",", "."));
 
@@ -203,9 +193,7 @@ export default function DashboardScreen({ route, navigation }) {
 
     const isSend = moneyMode === "send";
 
-    // ❗ NEW: Prevent sending money if balance is too low
     if (isSend) {
-      // SEND MONEY → goes directly to recent
       if (numericAmount > balance) {
         Alert.alert(
           "Insufficient Balance",
@@ -229,7 +217,6 @@ export default function DashboardScreen({ route, navigation }) {
         ...prev,
       ]);
     } else {
-      // REQUEST MONEY → also goes to recent
       setRecent((prev) => [
         {
           id: Date.now().toString(),
@@ -237,7 +224,7 @@ export default function DashboardScreen({ route, navigation }) {
           username: moneyUsername.trim(),
           note: moneyNote.trim(),
           amount: numericAmount,
-          isIncoming: false, // <-- NOT incoming because user hasn’t paid yet
+          isIncoming: false,
           isPending: true,
           date: new Date().toISOString(),
         },
@@ -279,7 +266,6 @@ export default function DashboardScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* HEADER */}
         <View style={styles.headerRow}>
           <View>
             <Text style={styles.greetingText}>Welcome,</Text>
@@ -294,7 +280,6 @@ export default function DashboardScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* VISA CARD */}
         <TouchableOpacity
           style={styles.card}
           activeOpacity={0.9}
@@ -348,11 +333,7 @@ export default function DashboardScreen({ route, navigation }) {
           </View>
         </TouchableOpacity>
 
-        {/* ACTION BUTTONS UNDER CARD — PLAIN, NO STYLE */}
-
-        {/* QUICK ACTIONS */}
         <View style={styles.actionsRow}>
-          {/* SEND */}
           <TouchableOpacity
             style={styles.actionButton}
             onPress={() => navigation.navigate("SendMoney")}
@@ -361,7 +342,6 @@ export default function DashboardScreen({ route, navigation }) {
             <Text style={styles.actionText}>Send</Text>
           </TouchableOpacity>
 
-          {/* REQUEST */}
           <TouchableOpacity
             style={styles.actionButton}
             onPress={() => navigation.navigate("ReceiveMoney")}
@@ -370,7 +350,6 @@ export default function DashboardScreen({ route, navigation }) {
             <Text style={styles.actionText}>Request</Text>
           </TouchableOpacity>
 
-          {/* HISTORY */}
           <TouchableOpacity
             style={styles.actionButton}
             onPress={() =>
@@ -382,7 +361,6 @@ export default function DashboardScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* QUICK SEND */}
         <View style={styles.sectionHeaderRow}>
           <Text style={styles.sectionTitle}>Quick send</Text>
           <TouchableOpacity
@@ -402,7 +380,6 @@ export default function DashboardScreen({ route, navigation }) {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.quickRow}
         >
-          {/* ADD USER */}
           <TouchableOpacity
             style={styles.quickAddWrapper}
             onPress={() => setAddUserModalVisible(true)}
@@ -413,7 +390,6 @@ export default function DashboardScreen({ route, navigation }) {
             <Text style={styles.quickName}>Add</Text>
           </TouchableOpacity>
 
-          {/* USERS */}
           {quickSend.map((u) => (
             <TouchableOpacity
               key={u.id}
@@ -432,7 +408,6 @@ export default function DashboardScreen({ route, navigation }) {
           ))}
         </ScrollView>
 
-        {/* PENDING INCOMING TRANSFERS */}
         {pendingTransfers.length > 0 && (
           <>
             <View style={styles.sectionHeaderRow}>
@@ -471,7 +446,6 @@ export default function DashboardScreen({ route, navigation }) {
           </>
         )}
 
-        {/* UPCOMING */}
         <View style={styles.sectionHeaderRow}>
           <Text style={styles.sectionTitle}>Upcoming payments</Text>
           <Text style={styles.sectionLink}>See all</Text>
@@ -487,7 +461,6 @@ export default function DashboardScreen({ route, navigation }) {
           </View>
         ))}
 
-        {/* RECENT */}
         <View style={[styles.sectionHeaderRow, { marginTop: 24 }]}>
           <Text style={styles.sectionTitle}>Recent transactions</Text>
           <TouchableOpacity
@@ -500,14 +473,14 @@ export default function DashboardScreen({ route, navigation }) {
         </View>
 
         {recent.map((t) => {
-          let amountColor = "#ef4444"; // default red
+          let amountColor = "#ef4444";
 
           if (t.isIncoming) {
-            amountColor = "#22c55e"; // incoming = green
+            amountColor = "#22c55e";
           }
 
           if (t.isRequest) {
-            amountColor = "#9a0c9aff"; // pending request = grey
+            amountColor = "#9a0c9aff";
           }
 
           return (
@@ -617,13 +590,10 @@ export default function DashboardScreen({ route, navigation }) {
   );
 }
 
-// ---------------- STYLES ----------------
-
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: colors.background },
   scrollContent: { paddingHorizontal: 20, paddingTop: 10 },
 
-  // HEADER
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -642,7 +612,6 @@ const styles = StyleSheet.create({
   },
   avatarInitial: { color: "#fff", fontWeight: "700", fontSize: 16 },
 
-  // CARD
   card: {
     backgroundColor: "#2a053cff",
     padding: 20,
@@ -677,7 +646,6 @@ const styles = StyleSheet.create({
   smallLabel: { color: "#94A3B8", fontSize: 10 },
   smallValue: { color: "#fff", fontWeight: "600", fontSize: 13, marginTop: 3 },
 
-  // ACTION ROW
   actionsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -692,7 +660,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: 4,
-    gap: 4, // adds spacing between icon + text
+    gap: 4,
     flexDirection: "row",
   },
 
@@ -715,7 +683,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  // SECTIONS
   sectionHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -735,7 +702,6 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
 
-  // QUICK SEND
   quickRow: { paddingVertical: 8 },
   quickAddWrapper: { alignItems: "center", marginRight: 18 },
   addCircle: {
@@ -759,7 +725,6 @@ const styles = StyleSheet.create({
   quickAvatarText: { color: "#fff", fontWeight: "700", fontSize: 22 },
   quickName: { marginTop: 4, color: colors.text, fontSize: 12 },
 
-  // LIST ITEMS
   listItem: {
     flexDirection: "row",
     alignItems: "center",
@@ -771,18 +736,15 @@ const styles = StyleSheet.create({
   listTitle: { fontSize: 15, fontWeight: "600", color: colors.text },
   listSubtitle: { color: "#666", fontSize: 12, marginTop: 2 },
 
-  // UPCOMING AMOUNT (always red)
   upcomingAmount: {
     fontWeight: "600",
     color: "#ef4444",
   },
 
-  // RECENT AMOUNT
   recentAmount: {
     fontWeight: "600",
   },
 
-  // MODALS
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.4)",

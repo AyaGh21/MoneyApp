@@ -15,7 +15,6 @@ export default function TransferSuccessScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* CHECK ICON */}
         <View style={styles.iconWrapper}>
           <View style={styles.iconCircle}>
             <Feather name="check" size={40} color="#fff" />
@@ -25,7 +24,6 @@ export default function TransferSuccessScreen({ route, navigation }) {
         <Text style={styles.title}>Money Transfer Successful</Text>
         <Text style={styles.subtitle}>Below are the information summary</Text>
 
-        {/* SUMMARY CARD */}
         <View style={styles.summaryCard}>
           <View style={styles.row}>
             <Text style={styles.label}>Transaction ID</Text>
@@ -60,7 +58,6 @@ export default function TransferSuccessScreen({ route, navigation }) {
           </View>
         </View>
 
-        {/* BUTTONS */}
         <View style={styles.btnRow}>
           <TouchableOpacity
             style={styles.homeBtn}

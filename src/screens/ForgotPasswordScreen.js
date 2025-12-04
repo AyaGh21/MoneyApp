@@ -20,7 +20,6 @@ export default function ForgotPasswordScreen({ navigation }) {
       return;
     }
 
-    // fake success → navigate to OTP screen
     navigation.navigate("OTP", { email });
   };
 

@@ -15,9 +15,7 @@ import { Feather } from "@expo/vector-icons";
 
 export default function TransactionsScreen({ route, navigation }) {
   const allTransactions = route?.params?.allTransactions || [];
-
-  // ---------------- FILTER STATE ----------------
-  const [typeFilter, setTypeFilter] = useState("all"); // all | sent | received | request
+  const [typeFilter, setTypeFilter] = useState("all");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const formatDate = (iso) => {
@@ -46,7 +44,6 @@ export default function TransactionsScreen({ route, navigation }) {
     return new Date(y, m - 1, d2).getTime();
   };
 
-  // ---------------- TOTAL SENT & RECEIVED ----------------
   const totalSent = allTransactions
     .filter((t) => !t.isIncoming)
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
@@ -55,15 +52,12 @@ export default function TransactionsScreen({ route, navigation }) {
     .filter((t) => t.isIncoming)
     .reduce((sum, t) => sum + t.amount, 0);
 
-  // ---------------- APPLY FILTERS ----------------
   const filtered = useMemo(() => {
     return allTransactions.filter((t) => {
-      // TYPE FILTER
       if (typeFilter === "sent" && t.isIncoming) return false;
       if (typeFilter === "received" && !t.isIncoming) return false;
       if (typeFilter === "request" && !t.isRequest) return false;
 
-      // DATE FILTER (your data has no date → treat them as today)
       const txDate = new Date().getTime();
       const from = parseDate(fromDate);
       const to = parseDate(toDate);
@@ -75,7 +69,6 @@ export default function TransactionsScreen({ route, navigation }) {
     });
   }, [typeFilter, fromDate, toDate, allTransactions]);
 
-  // ---------------- RENDER ITEM ----------------
   const renderItem = ({ item }) => {
     const amountColor = item.isIncoming
       ? "#22c55e"
@@ -106,7 +99,6 @@ export default function TransactionsScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
-        {/* HEADER ROW WITH BACK BUTTON */}
         <View style={styles.headerRow}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Feather name="arrow-left" size={22} color={colors.text} />
@@ -114,11 +106,9 @@ export default function TransactionsScreen({ route, navigation }) {
 
           <Text style={styles.headerTitle}>Transaction History</Text>
 
-          {/* empty box to balance spacing */}
           <View style={{ width: 22 }} />
         </View>
 
-        {/* ----------- TOTAL SUMMARY ----------- */}
         <View style={styles.summaryBox}>
           <View style={styles.summaryBlock}>
             <Text style={styles.summaryLabel}>Total Received</Text>
@@ -135,7 +125,6 @@ export default function TransactionsScreen({ route, navigation }) {
           </View>
         </View>
 
-        {/* ----------- FILTER SECTION ----------- */}
         <View style={styles.filterBox}>
           <View style={styles.typeRow}>
             {[
@@ -164,7 +153,6 @@ export default function TransactionsScreen({ route, navigation }) {
             ))}
           </View>
 
-          {/* DATE FILTER */}
           <View style={styles.dateRow}>
             <View style={{ flex: 1 }}>
               <Text style={styles.dateLabel}>From</Text>
@@ -188,7 +176,6 @@ export default function TransactionsScreen({ route, navigation }) {
           </View>
         </View>
 
-        {/* ----------- TRANSACTIONS LIST ----------- */}
         {filtered.length === 0 ? (
           <Text style={styles.empty}>No transactions found.</Text>
         ) : (
@@ -205,7 +192,6 @@ export default function TransactionsScreen({ route, navigation }) {
   );
 }
 
-// ---------------- STYLES ----------------
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#fff" },
 

@@ -20,7 +20,6 @@ export default function SupportScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
-        {/* ---------- HEADER ---------- */}
         <View style={styles.headerSection}>
           <TouchableOpacity
             style={styles.backBtn}
@@ -32,11 +31,8 @@ export default function SupportScreen({ navigation }) {
           <Text style={styles.headerTitle}>Support & Contact</Text>
         </View>
 
-        {/* ---------- CONTACT FORM ---------- */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Contact Us</Text>
-
-          {/* Name */}
           <View style={styles.inputWrapper}>
             <Feather name="user" size={18} color="#888" />
             <TextInput
@@ -48,7 +44,6 @@ export default function SupportScreen({ navigation }) {
             />
           </View>
 
-          {/* Email */}
           <View style={styles.inputWrapper}>
             <Feather name="mail" size={18} color="#888" />
             <TextInput
@@ -61,7 +56,6 @@ export default function SupportScreen({ navigation }) {
             />
           </View>
 
-          {/* Message */}
           <View
             style={[
               styles.inputWrapper,
@@ -87,7 +81,6 @@ export default function SupportScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        {/* ---------- FAQ SECTION ---------- */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Frequently Asked</Text>
 
@@ -104,7 +97,6 @@ export default function SupportScreen({ navigation }) {
           ))}
         </View>
 
-        {/* ---------- CUSTOMER SERVICE ---------- */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Customer Service</Text>
 
@@ -119,7 +111,6 @@ export default function SupportScreen({ navigation }) {
           </View>
         </View>
 
-        {/* ---------- LINKS ---------- */}
         <View style={styles.bottomLinks}>
           <TouchableOpacity>
             <Text style={styles.link}>Privacy Policy</Text>
@@ -134,7 +125,6 @@ export default function SupportScreen({ navigation }) {
   );
 }
 
-/* --------------------- STYLES --------------------- */
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,

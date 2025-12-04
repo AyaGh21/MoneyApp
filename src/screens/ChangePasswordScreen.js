@@ -35,7 +35,6 @@ export default function ChangePasswordScreen({ navigation }) {
       return;
     }
 
-    // Fake success — backend later
     Alert.alert("Success", "Your password has been updated!", [
       {
         text: "OK",
@@ -49,7 +48,6 @@ export default function ChangePasswordScreen({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.title}>Change Password</Text>
 
-        {/* OLD PASSWORD */}
         <Text style={styles.label}>Old Password</Text>
         <TextInput
           style={styles.input}
@@ -62,7 +60,6 @@ export default function ChangePasswordScreen({ navigation }) {
           onSubmitEditing={Keyboard.dismiss}
         />
 
-        {/* NEW PASSWORD */}
         <Text style={styles.label}>New Password</Text>
         <TextInput
           style={styles.input}
@@ -75,7 +72,6 @@ export default function ChangePasswordScreen({ navigation }) {
           onSubmitEditing={Keyboard.dismiss}
         />
 
-        {/* CONFIRM PASSWORD */}
         <Text style={styles.label}>Confirm New Password</Text>
         <TextInput
           style={styles.input}
@@ -88,7 +84,6 @@ export default function ChangePasswordScreen({ navigation }) {
           onSubmitEditing={Keyboard.dismiss}
         />
 
-        {/* BUTTON */}
         <TouchableOpacity style={styles.button} onPress={handleChange}>
           <Text style={styles.buttonText}>Update Password</Text>
         </TouchableOpacity>

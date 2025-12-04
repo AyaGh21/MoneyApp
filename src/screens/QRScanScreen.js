@@ -12,11 +12,10 @@ import QRCode from "react-native-qrcode-svg";
 import colors from "../theme/colors";
 
 export default function QRScanScreen({ navigation }) {
-  const [mode, setMode] = useState("scan"); // 'scan' or 'myqr'
+  const [mode, setMode] = useState("scan");
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* HEADER */}
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Feather name="arrow-left" size={22} color={colors.text} />
@@ -29,9 +28,7 @@ export default function QRScanScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* TOGGLE BUTTONS */}
       <View style={styles.toggleRow}>
-        {/* MY QR */}
         <TouchableOpacity
           style={[
             styles.toggleBtn,
@@ -51,7 +48,6 @@ export default function QRScanScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
 
-        {/* SCAN QR */}
         <TouchableOpacity
           style={[
             styles.toggleBtn,
@@ -72,13 +68,10 @@ export default function QRScanScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      {/* MAIN CONTENT AREA */}
       <View style={styles.scanBoxWrapper}>
         {mode === "scan" ? (
-          // 🔵 SCAN MODE
           <View style={styles.scanBox} />
         ) : (
-          // 🟢 MY QR MODE
           <View style={styles.myQRWrapper}>
             <QRCode value="GHAZALI" size={200} color={colors.primary} />
             <Text style={styles.myQRLabel}>This is your personal QR code</Text>

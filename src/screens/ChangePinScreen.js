@@ -29,7 +29,6 @@ export default function ChangePinScreen({ navigation }) {
       return;
     }
 
-    // later you will verify oldPin via backend
     Alert.alert("Success", "Your PIN has been updated!", [
       { text: "OK", onPress: () => navigation.goBack() },
     ]);
@@ -41,7 +40,6 @@ export default function ChangePinScreen({ navigation }) {
         <Text style={styles.title}>Change PIN</Text>
         <Text style={styles.subtitle}>Update your 4-digit security PIN</Text>
 
-        {/* OLD PIN */}
         <Text style={styles.label}>Old PIN</Text>
         <TextInput
           style={styles.pinInput}
@@ -52,7 +50,6 @@ export default function ChangePinScreen({ navigation }) {
           onChangeText={setOldPin}
         />
 
-        {/* NEW PIN */}
         <Text style={styles.label}>New PIN</Text>
         <TextInput
           style={styles.pinInput}
@@ -63,7 +60,6 @@ export default function ChangePinScreen({ navigation }) {
           onChangeText={setNewPin}
         />
 
-        {/* CONFIRM NEW PIN */}
         <Text style={styles.label}>Confirm New PIN</Text>
         <TextInput
           style={styles.pinInput}
@@ -74,7 +70,6 @@ export default function ChangePinScreen({ navigation }) {
           onChangeText={setConfirmPin}
         />
 
-        {/* BUTTON */}
         <TouchableOpacity style={styles.button} onPress={handleChangePin}>
           <Text style={styles.buttonText}>Save Changes</Text>
         </TouchableOpacity>
