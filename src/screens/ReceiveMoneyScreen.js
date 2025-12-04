@@ -38,11 +38,14 @@ export default function ReceiveMoneyScreen({ navigation }) {
     }
 
     // send to Dashboard
-    navigation.navigate("Dashboard", {
-      newRequest: {
-        username: requestUser.trim(),
-        amount: amt,
-        note: requestNote.trim(),
+    navigation.navigate("MainTabs", {
+      screen: "Home",
+      params: {
+        newRequest: {
+          username: requestUser.trim(),
+          amount: amt,
+          note: requestNote.trim(),
+        },
       },
     });
 
