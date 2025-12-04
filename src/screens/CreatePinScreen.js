@@ -3,12 +3,36 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import colors from "../theme/colors";
 
-export default function CreatePinScreen({ navigation }) {
+export default function CreatePinScreen({ navigation, route }) {
   const [pin, setPin] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (pin.length !== 4) return;
-    navigation.replace("MainTabs");
+
+    try {
+      const response = await fetch(
+        "http://192.168.1.119/money-api/create_pin.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: route.params.user_id,
+            pin: pin,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        navigation.replace("MainTabs");
+      } else {
+        alert(data.error);
+      }
+    } catch (err) {
+      console.log("CREATE PIN ERROR:", err);
+      alert("Network error");
+    }
   };
 
   return (

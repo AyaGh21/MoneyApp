@@ -155,7 +155,7 @@ export default function SignupScreen({ navigation }) {
     outputRange: [0, -12],
   });
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (!fullName || !email || !phone || !password || !confirmPassword) {
       alert("Please fill all fields");
       return;
@@ -166,7 +166,33 @@ export default function SignupScreen({ navigation }) {
       return;
     }
 
-    navigation.navigate("CreatePin");
+    try {
+      const response = await fetch(
+        "http://192.168.1.119/money-api/register.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: fullName, // FIXED
+            email,
+            phone,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Account created!");
+        navigation.navigate("CreatePin", { user_id: data.user_id });
+      } else {
+        alert(data.error || "Something went wrong");
+      }
+    } catch (err) {
+      console.log(err);
+      alert("Network error");
+    }
   };
 
   return (

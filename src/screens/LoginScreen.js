@@ -146,6 +146,36 @@ export default function LoginScreen({ navigation }) {
     outputRange: [0, -12],
   });
 
+  const handleLogin = async () => {
+    if (!emailOrPhone || !password) {
+      alert("Missing fields");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://192.168.1.119/money-api/login.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          login: emailOrPhone,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        navigation.navigate("EnterPin", {
+          user_id: data.user_id,
+        });
+      } else {
+        alert(data.error);
+      }
+    } catch (err) {
+      alert("Network error");
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* ---------- ANIMATED WAVE BACKGROUND ---------- */}
@@ -293,7 +323,7 @@ export default function LoginScreen({ navigation }) {
             {/* LOGIN BUTTON */}
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate("EnterPin")}
+              onPress={handleLogin}
               activeOpacity={0.8}
             >
               <Text style={styles.buttonText}>Login</Text>

@@ -8,15 +8,37 @@ import {
 } from "react-native";
 import colors from "../theme/colors";
 
-export default function EnterPinScreen({ navigation }) {
+export default function EnterPinScreen({ navigation, route }) {
   const [pin, setPin] = useState("");
+  const handleCheckPin = async () => {
+    if (pin.length !== 4) return;
 
-  const handleCheckPin = () => {
-    if (pin.length === 4) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "MainTabs" }],
-      });
+    try {
+      const response = await fetch(
+        "http://192.168.1.119/money-api/check_pin.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: route.params.user_id,
+            pin: pin,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "MainTabs" }],
+        });
+      } else {
+        alert("Wrong PIN");
+      }
+    } catch (err) {
+      console.log("CHECK PIN ERROR:", err);
+      alert("Network error");
     }
   };
 
