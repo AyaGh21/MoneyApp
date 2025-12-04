@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import colors from "../theme/colors";
+import * as SecureStore from "expo-secure-store";
 
 export default function CreatePinScreen({ navigation, route }) {
   const [pin, setPin] = useState("");
@@ -9,30 +10,11 @@ export default function CreatePinScreen({ navigation, route }) {
   const handleSubmit = async () => {
     if (pin.length !== 4) return;
 
-    try {
-      const response = await fetch(
-        "http://192.168.1.119/money-api/create_pin.php",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: route.params.user_id,
-            pin: pin,
-          }),
-        }
-      );
+    await SecureStore.setItemAsync("user_pin", pin);
 
-      const data = await response.json();
-
-      if (data.success) {
-        navigation.replace("MainTabs");
-      } else {
-        alert(data.error);
-      }
-    } catch (err) {
-      console.log("CREATE PIN ERROR:", err);
-      alert("Network error");
-    }
+    navigation.replace("MainTabs", {
+      user_id: data.user_id,
+    });
   };
 
   return (

@@ -7,38 +7,28 @@ import {
   TextInput,
 } from "react-native";
 import colors from "../theme/colors";
+import * as SecureStore from "expo-secure-store";
 
 export default function EnterPinScreen({ navigation, route }) {
   const [pin, setPin] = useState("");
+
   const handleCheckPin = async () => {
     if (pin.length !== 4) return;
 
-    try {
-      const response = await fetch(
-        "http://192.168.1.119/money-api/check_pin.php",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: route.params.user_id,
-            pin: pin,
-          }),
-        }
-      );
+    const savedPin = await SecureStore.getItemAsync("user_pin");
 
-      const data = await response.json();
+    if (!savedPin) {
+      alert("No PIN found. Please create a PIN first.");
+      return;
+    }
 
-      if (data.success) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "MainTabs" }],
-        });
-      } else {
-        alert("Wrong PIN");
-      }
-    } catch (err) {
-      console.log("CHECK PIN ERROR:", err);
-      alert("Network error");
+    if (pin === savedPin) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "MainTabs" }],
+      });
+    } else {
+      alert("Wrong PIN");
     }
   };
 
