@@ -50,12 +50,15 @@ export default function SendMoneyScreen({ navigation }) {
 
     // Also send to dashboard AFTER success
     setTimeout(() => {
-      navigation.navigate("Dashboard", {
-        newSentTransfer: {
-          id: transferId,
-          username,
-          note,
-          amount: numeric,
+      navigation.navigate("MainTabs", {
+        screen: "Home",
+        params: {
+          newSentTransfer: {
+            id: transferId,
+            username,
+            note,
+            amount: numeric,
+          },
         },
       });
     }, 3000);

@@ -173,7 +173,7 @@ export default function SignupScreen({ navigation }) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            username: fullName, // FIXED
+            username: fullName,
             email,
             phone,
             password,
