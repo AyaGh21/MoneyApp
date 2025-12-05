@@ -1,4 +1,3 @@
-// src/screens/QRScanScreen.js
 import React, { useState } from "react";
 import {
   SafeAreaView,
